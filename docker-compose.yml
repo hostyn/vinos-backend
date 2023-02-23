@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  vinos-backend:
+    container_name: vinos-backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - PORT=3000
+    links:
+      - mongo
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 3000:3000
+
+  mongo:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
