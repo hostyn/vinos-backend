@@ -9,6 +9,8 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       - PORT=3000
+      - MONGODB_URI=mongodb://mongo/vinosdb
+      - PRIVATE_KEY=supersecretkey
     links:
       - mongo
     volumes:
