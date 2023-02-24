@@ -7,7 +7,10 @@ export const getMeasurementsHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const measurements = await WineMeasurement.find()
+  const measurements = await WineMeasurement.find().populate([
+    'variety',
+    'type',
+  ])
   res.status(200).json({ measurements })
 }
 
