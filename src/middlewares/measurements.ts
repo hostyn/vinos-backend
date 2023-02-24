@@ -17,6 +17,7 @@ export const validateMeasurementParams = async (
   res: Response,
   next: NextFunction
 ) => {
+  // Checking for missing params and wrong types
   const anyError = MEASUREMENT_PARAMS.some(param => {
     if (req.body[param.name] == null) {
       res.status(400).json({ error: `${param.name} is required` })
@@ -34,11 +35,23 @@ export const validateMeasurementParams = async (
 
   const { variety, type } = req.body
 
-  const wineVariety = await WineVariety.findById(variety)
-  console.log(wineVariety)
+  // Check if variety is valid
+  try {
+    const wineVariety = await WineVariety.findById(variety)
+    if (!wineVariety) throw new Error('Invalid variety')
+  } catch {
+    res.status(400).json({ error: 'Invalid variety' })
+    return
+  }
 
-  const wineType = await WineType.findById(type)
-  console.log(wineType)
+  // Check if type is valid
+  try {
+    const wineType = await WineType.findById(type)
+    if (!wineType) throw new Error('Invalid type')
+  } catch {
+    res.status(400).json({ error: 'Invalid type' })
+    return
+  }
 
   next()
 }

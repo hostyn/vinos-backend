@@ -9,7 +9,21 @@ export const getMeasurementsHandler = async (req: Request, res: Response) => {
 }
 
 export const postMeasurementHandler = async (req: Request, res: Response) => {
-  res.status(200).json({ status: 'ok' })
+  const { year, variety, type, color, temperature, alcohol, ph, observations } =
+    req.body
+
+  const newMeasurement = await new WineMeasurement({
+    year,
+    variety,
+    type,
+    color,
+    temperature,
+    alcohol,
+    ph,
+    observations,
+  }).save()
+
+  res.status(200).json({ measurement: newMeasurement })
 }
 
 export const getWineTypesHandler = async (req: Request, res: Response) => {

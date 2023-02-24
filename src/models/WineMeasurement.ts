@@ -8,7 +8,7 @@ interface IWineMeasurement {
   type: PopulatedDoc<IWineType>
   color: string
   temperature: number
-  alcoholContent: number
+  alcohol: number
   ph: number
   observations: string
 }
@@ -32,7 +32,7 @@ const wineMeasurementSchema = new mongoose.Schema(
     temperature: {
       type: Number,
     },
-    alcoholContent: {
+    alcohol: {
       type: Number,
     },
     ph: {
