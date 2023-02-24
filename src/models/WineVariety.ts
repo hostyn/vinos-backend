@@ -12,10 +12,6 @@ const wineVarietySchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    type: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'WineType',
-    },
   },
   { versionKey: false }
 )
