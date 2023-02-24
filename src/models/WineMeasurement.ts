@@ -2,7 +2,7 @@ import mongoose, { type PopulatedDoc } from 'mongoose'
 import { type IWineType } from './WineType'
 import { type IWineVariety } from './WineVariety'
 
-interface IWineMeasurement {
+export interface IWineMeasurement {
   year: number
   variety: PopulatedDoc<IWineVariety>
   type: PopulatedDoc<IWineType>

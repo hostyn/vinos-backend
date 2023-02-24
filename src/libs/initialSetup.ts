@@ -1,5 +1,6 @@
 import { WINE_TYPES, WINE_VARIETIES } from '../constants'
 import { db } from '../database'
+import WineMeasurement from '../models/WineMeasurement'
 import WineType from '../models/WineType'
 import WineVariety from '../models/WineVariety'
 
@@ -8,8 +9,9 @@ export const createWineTypesAndWineVarieties = async (): Promise<void> => {
 
   const storedWineTypes = await WineType.find({ name: { $in: WINE_TYPES } })
 
+  let wineTypes: any = []
   if (storedWineTypes.length === 0) {
-    await Promise.all(
+    wineTypes = await Promise.all(
       WINE_TYPES.map(async item => await new WineType({ name: item }).save())
     )
   }
@@ -18,12 +20,50 @@ export const createWineTypesAndWineVarieties = async (): Promise<void> => {
     name: { $in: WINE_VARIETIES },
   })
 
+  let wineVarieties: any = []
   if (storedWineVarieties.length === 0) {
-    await Promise.all(
+    wineVarieties = await Promise.all(
       WINE_VARIETIES.map(
         async item => await new WineVariety({ name: item }).save()
       )
     )
+  }
+
+  // Add sample measurements
+  const storedMeasurements = await WineMeasurement.find()
+  if (storedMeasurements.length === 0) {
+    await new WineMeasurement({
+      year: 2012,
+      variety: wineVarieties[0]._id,
+      type: wineTypes[0]._id,
+      alcohol: 5.5,
+      observations: '',
+      color: 'tinto',
+      ph: 3.3,
+      temperature: 21.5,
+    }).save()
+
+    await new WineMeasurement({
+      year: 2019,
+      variety: wineVarieties[4]._id,
+      type: wineTypes[1]._id,
+      alcohol: 4.6,
+      observations: '',
+      color: 'blanco',
+      ph: 3,
+      temperature: 23.2,
+    }).save()
+
+    await new WineMeasurement({
+      year: 2008,
+      variety: wineVarieties[2]._id,
+      type: wineTypes[3]._id,
+      alcohol: 6.5,
+      observations: '',
+      color: 'tinto',
+      ph: 3.1,
+      temperature: 20.1,
+    }).save()
   }
 }
 
