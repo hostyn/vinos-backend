@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { PRIVATE_KEY } from '../config'
 import User from '../models/User'
@@ -13,11 +13,11 @@ export const isAuthenticated = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const authorization = req.headers['authorization']
+): Promise<void> => {
+  const authorization = req.headers.authorization
 
   // If no authorization provided
-  if (!authorization) {
+  if (authorization == null) {
     res.status(401).json({ error: 'Unauthorized' })
     return
   }
@@ -43,7 +43,7 @@ export const isAuthenticated = async (
 
     // Search user
     const user = User.findById(decodedJWT.id)
-    if (!user) {
+    if (user == null) {
       res.status(401).json({ error: 'Invalid token' })
       return
     }

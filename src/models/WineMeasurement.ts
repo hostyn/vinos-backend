@@ -1,6 +1,6 @@
-import mongoose, { PopulatedDoc } from 'mongoose'
-import { IWineType } from './WineType'
-import { IWineVariety } from './WineVariety'
+import mongoose, { type PopulatedDoc } from 'mongoose'
+import { type IWineType } from './WineType'
+import { type IWineVariety } from './WineVariety'
 
 interface IWineMeasurement {
   year: number

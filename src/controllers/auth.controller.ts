@@ -1,15 +1,18 @@
-import { Request, Response } from 'express'
+import { type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { PRIVATE_KEY } from '../config'
 import User from '../models/User'
 
-export const loginHandler = async (req: Request, res: Response) => {
+export const loginHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { email, password } = req.body
 
   const user = await User.findOne({ email })
 
   // If user not found
-  if (!user) {
+  if (user == null) {
     res.status(404).json({ error: 'User does not exist' })
     return
   }
@@ -28,7 +31,10 @@ export const loginHandler = async (req: Request, res: Response) => {
   res.status(200).json({ token })
 }
 
-export const registerHandler = async (req: Request, res: Response) => {
+export const registerHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { email, password } = req.body
 
   // Create user and encrypt password

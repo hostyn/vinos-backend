@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose'
+import mongoose, { type Model } from 'mongoose'
 import bcrypt from 'bcryptjs'
 
 interface IUser {
@@ -7,8 +7,8 @@ interface IUser {
 }
 
 interface UserModel extends Model<IUser> {
-  encryptPassword(password: string): string
-  comparePassword(passwrod: string, hash: string): boolean
+  encryptPassword: (password: string) => string
+  comparePassword: (passwrod: string, hash: string) => boolean
 }
 
 const userSchema = new mongoose.Schema(
