@@ -13,36 +13,39 @@ interface IWineMeasurement {
   observations: string
 }
 
-const wineMeasurementSchema = new mongoose.Schema({
-  year: {
-    type: Number,
+const wineMeasurementSchema = new mongoose.Schema(
+  {
+    year: {
+      type: Number,
+    },
+    variety: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'WineVariety',
+    },
+    type: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'WineType',
+    },
+    color: {
+      type: String,
+    },
+    temperature: {
+      type: Number,
+    },
+    alcoholContent: {
+      type: Number,
+    },
+    ph: {
+      type: Number,
+    },
+    observations: {
+      type: String,
+    },
   },
-  variety: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'WineVariety',
-  },
-  type: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'WineType',
-  },
-  color: {
-    type: String,
-  },
-  temperature: {
-    type: Number,
-  },
-  alcoholContent: {
-    type: Number,
-  },
-  ph: {
-    type: Number,
-  },
-  observations: {
-    type: String,
-  },
-})
+  { timestamps: true, versionKey: false }
+)
 
 export default mongoose.model<IWineMeasurement>(
-  'WineType',
+  'WineMeasurements',
   wineMeasurementSchema
 )
