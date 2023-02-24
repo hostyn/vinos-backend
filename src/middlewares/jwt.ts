@@ -45,6 +45,7 @@ export const isAuthenticated = async (
     const user = User.findById(decodedJWT.id)
     if (!user) {
       res.status(401).json({ error: 'Invalid token' })
+      return
     }
   } catch {
     res.status(401).json({ error: 'Invalid token' })

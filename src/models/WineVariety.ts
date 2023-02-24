@@ -1,9 +1,7 @@
-import mongoose, { PopulatedDoc } from 'mongoose'
-import { IWineType } from './WineType'
+import mongoose from 'mongoose'
 
 export interface IWineVariety {
   name: string
-  type: PopulatedDoc<IWineType>
 }
 
 const wineVarietySchema = new mongoose.Schema(
