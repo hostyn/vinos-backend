@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
+import User from '../models/User'
 
-export const verifyEmailAndPassword = async (
+export const verifyEmailAndPassword = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -26,8 +27,26 @@ export const verifyEmailAndPassword = async (
   }
 
   // Check if password have at least 8 characters
-  if (password.lenght < 8) {
+  if (password.length < 8) {
     res.status(400).json({ error: 'Password must have at least 8 characters' })
+    return
+  }
+
+  next()
+}
+
+export const checkIfUserExists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body
+
+  // Search for a user with the same email
+  const matchingUser = await User.findOne({ email })
+
+  if (matchingUser) {
+    res.status(400).json({ error: 'User already exists' })
     return
   }
 

@@ -10,16 +10,15 @@ export const loginHandler = async (req: Request, res: Response) => {
 
   // If user not found
   if (!user) {
-    res.status(404).json({ error: 'Wrong user or password' })
+    res.status(404).json({ error: 'User does not exist' })
     return
   }
 
   // If wrong password
   if (!User.comparePassword(password, user.password)) {
-    res.status(404).json({ error: 'Wrong user or password' })
+    res.status(404).json({ error: 'Wrong password' })
     return
   }
-  // We use the same response to prevent user enumeration
 
   // Create jsonwebtoken
   const token = jwt.sign({ id: user._id }, PRIVATE_KEY, {
