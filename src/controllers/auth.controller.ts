@@ -1,7 +1,6 @@
 import { type Request, type Response } from 'express'
-import jwt from 'jsonwebtoken'
-import { PRIVATE_KEY } from '../config'
 import User from '../models/User'
+import { createCookie } from '../libs/cookie'
 
 export const loginHandler = async (
   req: Request,
@@ -23,12 +22,11 @@ export const loginHandler = async (
     return
   }
 
-  // Create jsonwebtoken
-  const token = jwt.sign({ id: user._id }, PRIVATE_KEY, {
-    expiresIn: 7 * 24 * 60 * 60, // 7 days
-  })
+  // Set cookie
+  const cookie = createCookie(user._id)
 
-  res.status(200).json({ token })
+  res.setHeader('Set-Cookie', cookie)
+  res.status(200).end()
 }
 
 export const registerHandler = async (
@@ -46,10 +44,10 @@ export const registerHandler = async (
   // Save to database
   const savedUser = await newUser.save()
 
-  // Create jsonwebtoken
-  const token = jwt.sign({ id: savedUser._id }, PRIVATE_KEY, {
-    expiresIn: 7 * 24 * 60 * 60, // 7 days
-  })
+  // Set cookie
+  const cookie = createCookie(savedUser._id)
 
-  res.status(200).json({ token })
+  res.setHeader('Set-Cookie', cookie)
+
+  res.status(200).end()
 }

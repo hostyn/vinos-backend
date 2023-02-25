@@ -1,7 +1,8 @@
 import { type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { PRIVATE_KEY } from '../config'
 import User from '../models/User'
+import { createEmptyCookie } from '../libs/cookie'
+import { COOKIE_NAME, PRIVATE_KEY } from '../config'
 
 interface IJWT {
   id: string
@@ -14,20 +15,7 @@ export const isAuthenticated = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const authorization = req.headers.authorization
-
-  // If no authorization provided
-  if (authorization == null) {
-    res.status(401).json({ error: 'Unauthorized' })
-    return
-  }
-
-  const [type, token] = authorization.split(' ')
-
-  if (type !== 'Bearer') {
-    res.status(401).json({ error: 'Unauthorized' })
-    return
-  }
+  const token = req.cookies[COOKIE_NAME]
 
   try {
     // Decode JWT
@@ -37,6 +25,8 @@ export const isAuthenticated = async (
 
     // If token expired
     if (actualTimestamp > decodedJWT.exp) {
+      const cookie = createEmptyCookie()
+      res.setHeader('Set-Cookie', cookie)
       res.status(401).json({ error: 'Token expired' })
       return
     }
@@ -44,10 +34,14 @@ export const isAuthenticated = async (
     // Search user
     const user = User.findById(decodedJWT.id)
     if (user == null) {
+      const cookie = createEmptyCookie()
+      res.setHeader('Set-Cookie', cookie)
       res.status(401).json({ error: 'Invalid token' })
       return
     }
   } catch {
+    const cookie = createEmptyCookie()
+    res.setHeader('Set-Cookie', cookie)
     res.status(401).json({ error: 'Invalid token' })
     return
   }

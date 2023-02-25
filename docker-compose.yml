@@ -11,6 +11,7 @@ services:
       - PORT=3000
       - MONGODB_URI=mongodb://mongo/vinosdb
       - PRIVATE_KEY=supersecretkey
+      - COOKIE_NAME=vinosAuthToken
     links:
       - mongo
     volumes:
