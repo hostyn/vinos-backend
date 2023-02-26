@@ -51,3 +51,7 @@ export const registerHandler = async (
 
   res.status(200).end()
 }
+
+export const checkHandler = (req: Request, res: Response): void => {
+  res.status(200).end()
+}
