@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   checkHandler,
   loginHandler,
+  logoutHandler,
   registerHandler,
 } from '../controllers/auth.controller'
 import { checkIfUserExists, verifyEmailAndPassword } from '../middlewares/auth'
@@ -16,5 +17,6 @@ authRoutes.post(
   registerHandler
 )
 authRoutes.get('/checkauth', [isAuthenticated], checkHandler)
+authRoutes.post('/logout', logoutHandler)
 
 export default authRoutes
