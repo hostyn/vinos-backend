@@ -12,13 +12,13 @@ export const loginHandler = async (
 
   // If user not found
   if (user == null) {
-    res.status(404).json({ error: 'User does not exist' })
+    res.status(404).json({ error: 'user-not-found' })
     return
   }
 
   // If wrong password
   if (!User.comparePassword(password, user.password)) {
-    res.status(404).json({ error: 'Wrong password' })
+    res.status(404).json({ error: 'wrong-password' })
     return
   }
 

@@ -10,25 +10,25 @@ export const verifyEmailAndPassword = (
 
   // Check if email exists
   if (email == null) {
-    res.status(400).json({ error: 'Email is required' })
+    res.status(400).json({ error: 'email-required' })
     return
   }
 
   // Check if password exists
   if (password == null) {
-    res.status(400).json({ error: 'Password is required' })
+    res.status(400).json({ error: 'password-required' })
     return
   }
 
   // Check email with regex
   if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-    res.status(400).json({ error: 'Invalid email' })
+    res.status(400).json({ error: 'invalid-email' })
     return
   }
 
   // Check if password have at least 8 characters
   if (password.length < 8) {
-    res.status(400).json({ error: 'Password must have at least 8 characters' })
+    res.status(400).json({ error: 'password-too-short' })
     return
   }
 
@@ -46,7 +46,7 @@ export const checkIfUserExists = async (
   const matchingUser = await User.findOne({ email })
 
   if (matchingUser != null) {
-    res.status(400).json({ error: 'User already exists' })
+    res.status(400).json({ error: 'user-already-exists' })
     return
   }
 

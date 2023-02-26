@@ -27,7 +27,7 @@ export const isAuthenticated = async (
     if (actualTimestamp > decodedJWT.exp) {
       const cookie = createEmptyCookie()
       res.setHeader('Set-Cookie', cookie)
-      res.status(401).json({ error: 'Token expired' })
+      res.status(401).json({ error: 'token-expired' })
       return
     }
 
@@ -36,13 +36,13 @@ export const isAuthenticated = async (
     if (user == null) {
       const cookie = createEmptyCookie()
       res.setHeader('Set-Cookie', cookie)
-      res.status(401).json({ error: 'Invalid token' })
+      res.status(401).json({ error: 'invalid-token' })
       return
     }
   } catch {
     const cookie = createEmptyCookie()
     res.setHeader('Set-Cookie', cookie)
-    res.status(401).json({ error: 'Invalid token' })
+    res.status(401).json({ error: 'invalid-token' })
     return
   }
 
