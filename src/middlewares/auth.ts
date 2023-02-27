@@ -1,7 +1,7 @@
 import { type NextFunction, type Request, type Response } from 'express'
 import User from '../models/User'
 
-export const verifyEmailAndPassword = (
+export const requireEmailAndPassword = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -19,6 +19,16 @@ export const verifyEmailAndPassword = (
     res.status(400).json({ error: 'password-required' })
     return
   }
+
+  next()
+}
+
+export const verifyEmailAndPassword = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const { email, password } = req.body
 
   // Check email with regex
   if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {

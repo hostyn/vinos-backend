@@ -5,15 +5,19 @@ import {
   logoutHandler,
   registerHandler,
 } from '../controllers/auth.controller'
-import { checkIfUserExists, verifyEmailAndPassword } from '../middlewares/auth'
+import {
+  checkIfUserExists,
+  requireEmailAndPassword,
+  verifyEmailAndPassword,
+} from '../middlewares/auth'
 import { isAuthenticated } from '../middlewares/jwt'
 
 const authRoutes = Router()
 
-authRoutes.post('/login', loginHandler)
+authRoutes.post('/login', requireEmailAndPassword, loginHandler)
 authRoutes.post(
   '/registry',
-  [verifyEmailAndPassword, checkIfUserExists],
+  [requireEmailAndPassword, verifyEmailAndPassword, checkIfUserExists],
   registerHandler
 )
 authRoutes.get('/checkauth', [isAuthenticated], checkHandler)
