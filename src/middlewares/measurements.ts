@@ -20,13 +20,13 @@ export const validateMeasurementParams = async (
   // Checking for missing params and wrong types
   const anyError = MEASUREMENT_PARAMS.some(param => {
     if (req.body[param.name] == null) {
-      res.status(400).json({ error: `${param.name} is required` })
+      res.status(400).json({ error: `${param.name}-required` })
       return true
     }
 
     // eslint-disable-next-line valid-typeof
     if (typeof req.body[param.name] !== param.type) {
-      res.status(400).json({ error: `${param.name} is must be ${param.type}` })
+      res.status(400).json({ error: `${param.name}-must-be-${param.type}` })
       return true
     }
     return false
@@ -39,18 +39,18 @@ export const validateMeasurementParams = async (
   // Check if variety is valid
   try {
     const wineVariety = await WineVariety.findById(variety)
-    if (wineVariety == null) throw new Error('Invalid variety')
+    if (wineVariety == null) throw new Error('invalid-variety')
   } catch {
-    res.status(400).json({ error: 'Invalid variety' })
+    res.status(400).json({ error: 'invalid-variety' })
     return
   }
 
   // Check if type is valid
   try {
     const wineType = await WineType.findById(type)
-    if (wineType == null) throw new Error('Invalid type')
+    if (wineType == null) throw new Error('invalid-type')
   } catch {
-    res.status(400).json({ error: 'Invalid type' })
+    res.status(400).json({ error: 'invalid-type' })
     return
   }
 
