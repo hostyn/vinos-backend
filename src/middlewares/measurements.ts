@@ -5,6 +5,7 @@ import WineVariety from '../models/WineVariety'
 const MEASUREMENT_PARAMS = [
   { name: 'year', type: 'number' },
   { name: 'variety', type: 'string' },
+  { name: 'type', type: 'string' },
   { name: 'color', type: 'string' },
   { name: 'temperature', type: 'number' },
   { name: 'alcohol', type: 'number' },
