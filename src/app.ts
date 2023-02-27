@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.routes'
 import measurementsRoutes from './routes/measurements.routes'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import { ORIGIN } from './config'
 
 const app = express()
 
@@ -14,7 +15,7 @@ app.use(cookieParser())
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:4000',
+    origin: ORIGIN,
   })
 )
 
