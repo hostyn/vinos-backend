@@ -1,7 +1,6 @@
 import { type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../models/User'
-import { createEmptyCookie } from '../libs/cookie'
 import { COOKIE_NAME, PRIVATE_KEY } from '../config'
 
 interface IJWT {
@@ -25,8 +24,7 @@ export const isAuthenticated = async (
 
     // If token expired
     if (actualTimestamp > decodedJWT.exp) {
-      const cookie = createEmptyCookie()
-      res.setHeader('Set-Cookie', cookie)
+      res.clearCookie(COOKIE_NAME)
       res.status(401).json({ error: 'token-expired' })
       return
     }
@@ -34,14 +32,12 @@ export const isAuthenticated = async (
     // Search user
     const user = User.findById(decodedJWT.id)
     if (user == null) {
-      const cookie = createEmptyCookie()
-      res.setHeader('Set-Cookie', cookie)
+      res.clearCookie(COOKIE_NAME)
       res.status(401).json({ error: 'invalid-token' })
       return
     }
   } catch {
-    const cookie = createEmptyCookie()
-    res.setHeader('Set-Cookie', cookie)
+    res.clearCookie(COOKIE_NAME)
     res.status(401).json({ error: 'invalid-token' })
     return
   }

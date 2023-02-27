@@ -16,13 +16,3 @@ export const createCookie = (userId: mongoose.Types.ObjectId): string => {
     path: '/',
   })
 }
-
-export const createEmptyCookie = (): string => {
-  return cookie.serialize(COOKIE_NAME, '', {
-    httpOnly: true,
-    maxAge: 0,
-    secure: false,
-    sameSite: 'none',
-    path: '/',
-  })
-}

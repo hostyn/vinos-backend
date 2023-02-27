@@ -1,6 +1,7 @@
 import { type Request, type Response } from 'express'
 import User from '../models/User'
-import { createCookie, createEmptyCookie } from '../libs/cookie'
+import { createCookie } from '../libs/cookie'
+import { COOKIE_NAME } from '../config'
 
 export const loginHandler = async (
   req: Request,
@@ -57,7 +58,6 @@ export const checkHandler = (req: Request, res: Response): void => {
 }
 
 export const logoutHandler = (req: Request, res: Response): void => {
-  const cookie = createEmptyCookie()
-  res.setHeader('Set-Cookie', cookie)
+  res.clearCookie(COOKIE_NAME)
   res.status(200).end()
 }
