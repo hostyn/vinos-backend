@@ -1,12 +1,9 @@
 import { WINE_TYPES, WINE_VARIETIES } from '../constants'
-import { db } from '../database'
 import WineMeasurement from '../models/WineMeasurement'
 import WineType from '../models/WineType'
 import WineVariety from '../models/WineVariety'
 
 export const createWineTypesAndWineVarieties = async (): Promise<void> => {
-  await db
-
   const storedWineTypes = await WineType.find({ name: { $in: WINE_TYPES } })
 
   let wineTypes: any = []
@@ -66,5 +63,3 @@ export const createWineTypesAndWineVarieties = async (): Promise<void> => {
     }).save()
   }
 }
-
-void createWineTypesAndWineVarieties()
